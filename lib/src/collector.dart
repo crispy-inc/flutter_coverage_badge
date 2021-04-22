@@ -48,7 +48,7 @@ class _BadgeMetrics {
   final int rightX;
   final int rightLength;
 
-  _BadgeMetrics({this.width, this.rightX, this.rightLength});
+  _BadgeMetrics({required this.width, required this.rightX, required this.rightLength});
 
   factory _BadgeMetrics.forPercentage(double value) {
     final pct = (value * 100).floor();
@@ -82,8 +82,8 @@ String _color(double percentage) {
     0.9: _Color(0x97, 0xCA, 0x00),
     1.0: _Color(0x44, 0xCC, 0x11),
   };
-  double lower;
-  double upper;
+  double? lower;
+  double? upper;
   for (final key in map.keys) {
     if (percentage < key) {
       upper = key;
@@ -92,8 +92,9 @@ String _color(double percentage) {
     if (key < 1.0) lower = key;
   }
   upper ??= 1.0;
-  final lowerColor = map[lower];
-  final upperColor = map[upper];
+  lower ??= 0.0;
+  final lowerColor = map[lower]!;
+  final upperColor = map[upper]!;
   final range = upper - lower;
   final rangePct = (percentage - lower) / range;
   final pctLower = 1 - rangePct;
